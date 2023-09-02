@@ -8,7 +8,6 @@ def get_stock_data(stock_code, num_days):
     print(type(response))
     data = response.json()
     return data
-#让程序把获取到的股票代码、时间日期、数据这些都保存到 csv 文件里
 def save_to_csv(stock_code, num_days, stock_data):
     filename = f"{stock_code}_{num_days}.csv"
     with open(filename, "w", newline="") as csvfile:
