@@ -8,7 +8,7 @@ def get_stock_data(stock_code, num_days):
     print(type(response))
     data = response.json()
     return data
-
+#让程序把获取到的股票代码、时间日期、数据这些都保存到 csv 文件里
 def save_to_csv(stock_code, num_days, stock_data):
     filename = f"{stock_code}_{num_days}.csv"
     with open(filename, "w", newline="") as csvfile:
@@ -16,3 +16,18 @@ def save_to_csv(stock_code, num_days, stock_data):
         writer.writerow(["日期", "开盘价", "收盘价", "最高价", "最低价", "成交量"])
         for item in stock_data:
             writer.writerow([item["day"], item["open"], item["close"], item["high"], item["low"], item["volume"]])
+
+#正式程序开始：
+
+# 在这里输入你想要抓取的股票代码
+stock_code = "sz000001"
+# 在这里输入你想要抓取的天数
+num_days = 3
+
+#将stock_code和num_days传入get_stock_data()
+stock_data = get_stock_data(stock_code, num_days)
+
+#让程序把获取到的股票代码、时间日期、数据这些都保存到 csv 文件里
+save_to_csv(stock_code, num_days, stock_data)
+#文件保存好之后，在结果里输出保存成功的提示
+print(f"数据已保存到 {stock_code}_{num_days}.csv 文件中")
