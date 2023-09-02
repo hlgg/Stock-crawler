@@ -1,0 +1,18 @@
+import requests
+import csv
+
+def get_stock_data(stock_code, num_days):
+    datalen = num_days * 48
+    url = f"https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={stock_code}&scale=5&ma=5&datalen={datalen}"
+    response = requests.get(url)
+    print(type(response))
+    data = response.json()
+    return data
+
+def save_to_csv(stock_code, num_days, stock_data):
+    filename = f"{stock_code}_{num_days}.csv"
+    with open(filename, "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["日期", "开盘价", "收盘价", "最高价", "最低价", "成交量"])
+        for item in stock_data:
+            writer.writerow([item["day"], item["open"], item["close"], item["high"], item["low"], item["volume"]])
